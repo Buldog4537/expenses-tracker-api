@@ -43,7 +43,7 @@ class Budget(models.Model):
 
     def get_left(self):
         total_expenses = (
-            Expense.objects.filter(user=self.user).aggregate(Sum("amount"))[
+            Expense.objects.filter(user=self.user).aggregate(total=Sum("amount"))[
                 "amount__sum"
             ]
             or 0
