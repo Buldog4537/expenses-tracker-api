@@ -12,6 +12,9 @@ class Income(models.Model):
 
 
 class Category(models.Model):
+    user = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, related_name="categories"
+    )
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -28,6 +31,7 @@ class Expense(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="expenses",
     )
 
     def __str__(self):
@@ -44,7 +48,7 @@ class Budget(models.Model):
     def get_left(self):
         total_expenses = (
             Expense.objects.filter(user=self.user).aggregate(total=Sum("amount"))[
-                "amount__sum"
+                "total"
             ]
             or 0
         )
