@@ -7,13 +7,15 @@ from .models import Income, Category, Expense, Budget
 class IncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Income
-        fields = "__all__"
+        fields = ["id", "amount", "date", "user"]
+        read_only_fields = ["user"]
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
         fields = ["id", "amount", "date", "user", "category"]
+        read_only_fields = ["user"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
